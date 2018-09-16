@@ -95,8 +95,4 @@
 - [如何高效的使用 Git](https://github.com/chenxuezhou/compute_sience/blob/master/MD/additional-skills/how-to-use-git-efficiently.md)
 
 
-### 联系作者
 
-> crossoverJie#gmail.com
-
-<img src="https://ws2.sinaimg.cn/large/006tKfTcly1fsa01u7ro1j30gs0howfq.jpg" width="300"/> 
