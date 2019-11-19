@@ -5,5 +5,5 @@ package lamda;
 //   Stream apply();
 //}
 public interface NextItemProcessor<T> {//固定和非固定
-   Stream<T> apply();
+   SerialStream<T> apply();//特定的SerialStream<T>和返回T的Supplier不一样
 }
