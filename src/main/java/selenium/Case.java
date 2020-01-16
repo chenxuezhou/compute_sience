@@ -21,9 +21,10 @@ public class Case {
 
     public Case() {
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress","127.0.0.1:9222");
+        options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
         driver = new ChromeDriver(options);
-        manage=new BaiDuWangPanLogin();
+//        manage=new BaiDuWangPanLogin();
+        manage = new BokeYuanLogin();
     }
 
     public void login() {
@@ -32,9 +33,8 @@ public class Case {
         System.out.println(driver.getWindowHandles());
         try {
             String title = driver.getTitle();
-                Thread.sleep(3000);
-                manage.loginOpt();
-
+//            Thread.sleep(3000);
+            manage.loginOpt();
 
 
         } catch (Exception e) {
@@ -111,7 +111,7 @@ public class Case {
     }
 
     //安全验证滑动条出错，淘宝网也是一样
-    public class CSDNLogin implements Manage{
+    public class CSDNLogin implements Manage {
 
         @Override
         public void loginOpt() {
@@ -121,24 +121,45 @@ public class Case {
             WebElement elementById = driver.findElementByXPath("//input[@placeholder=\"手机号/邮箱/用户名\"]");
             elementById.clear();//elementById文本内容还是空的
             action.sendKeys(elementById, System.getProperty("name")).perform();
-            elementById=driver.findElementByXPath("//input[@placeholder=\"密码\"]");
+            elementById = driver.findElementByXPath("//input[@placeholder=\"密码\"]");
             elementById.clear();
             action.sendKeys(elementById, System.getProperty("pass")).perform();
             action.click(driver.findElementByXPath("//button[text()='登录']")).perform();
         }
     }
 
-    public class BaiDuWangPanLogin implements Manage{
+    public class BokeYuanLogin implements Manage {
 
         @Override
         public void loginOpt() {
             Actions action = new Actions(driver);
-            By by = By.xpath("");
+
+            WebElement elementById = driver.findElementByXPath("//input[@placeholder='登录用户名 / 邮箱']");
+            elementById.clear();//elementById文本内容还是空的
+            action.sendKeys(elementById, "乐可2016").perform();
+            elementById = driver.findElementByXPath("//input[@placeholder=\"密码\"]");
+            elementById.clear();
+            action.sendKeys(elementById, System.getProperty("password")).perform();
+            elementById = driver.findElementByXPath("//label[text()='记住我']");
+            action.click(elementById).perform();
+            action.click(driver.findElementByXPath("//span[text()='登录']")).perform();
+            //滑块验证
+            elementById=driver.findElementByClassName("geetest_canvas_slice geetest_absolute");
+//            .moveToElement(elementById,130,80)
+            action.clickAndHold(elementById).moveByOffset(0,130).perform();
+        }
+    }
+
+    public class  BaiDuWangPanLogin implements Manage {
+
+        @Override
+        public void loginOpt() {
+            Actions action = new Actions(driver);
 
             WebElement elementById = driver.findElementByXPath("//input[@placeholder=\"手机/邮箱/用户名\"]");
             elementById.clear();//elementById文本内容还是空的
             action.sendKeys(elementById, System.getProperty("name")).perform();
-            elementById=driver.findElementByXPath("//input[@placeholder=\"密码\"]");
+            elementById = driver.findElementByXPath("//input[@placeholder=\"密码\"]");
             elementById.clear();
             action.sendKeys(elementById, System.getProperty("pass")).perform();
             action.click(driver.findElementByXPath("//input[@value='登录']")).perform();
@@ -146,7 +167,7 @@ public class Case {
             try {
                 Thread.sleep(3000);//等待交互元素出现
                 driver.findElementByXPath("//span[text()='验证手机']");
-            }catch (Exception e){
+            } catch (Exception e) {
                 return;
             }
             action.click(driver.findElementByXPath("//p[text()='跳过']")).perform();
@@ -156,7 +177,6 @@ public class Case {
     public interface Manage {
         public void loginOpt();
     }
-
 
 
 }
